@@ -456,6 +456,31 @@ wss.on('connection', (ws) => {
         tipo: 'LigacaoEstabelecida',
         mensagem: 'Ligação WebSocket estabelecida com sucesso'
     }));
+
+    ws.on('message', (dados) => {
+        let mensagem;
+
+        // O cliente tem de enviar uma mensagem JSON válida
+        try {
+            mensagem = JSON.parse(dados.toString());
+        } catch (erro) {
+            ws.send(JSON.stringify({
+                tipo: 'Erro',
+                detalhe: 'A mensagem deve conter JSON válido'
+            }));
+            return;
+        }
+
+        if (!mensagem || typeof mensagem !== 'object' || Array.isArray(mensagem)) {
+            ws.send(JSON.stringify({
+                tipo: 'Erro',
+                detalhe: 'A mensagem deve ser um objeto JSON'
+            }));
+            return;
+        }
+
+        console.log('Mensagem WebSocket recebida:', mensagem);
+    });
 });
 
 
