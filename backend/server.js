@@ -479,7 +479,43 @@ wss.on('connection', (ws) => {
             return;
         }
 
-        console.log('Mensagem WebSocket recebida:', mensagem);
+        if (mensagem.tipo !== 'AtualizarEstadoSala') {
+            ws.send(JSON.stringify({
+                tipo: 'Erro',
+                detalhe: 'Tipo de evento desconhecido'
+            }));
+            return;
+        }
+
+        const { salaId, estado } = mensagem;
+
+        if (!Number.isInteger(salaId) || salaId <= 0) {
+            ws.send(JSON.stringify({
+                tipo: 'Erro',
+                detalhe: 'O salaId deve ser um número inteiro maior que 0'
+            }));
+            return;
+        }
+
+        if (!['disponivel', 'ocupada', 'manutencao'].includes(estado)) {
+            ws.send(JSON.stringify({
+                tipo: 'Erro',
+                detalhe: 'O estado deve ser disponivel, ocupada ou manutencao'
+            }));
+            return;
+        }
+
+        const sala = salas.find(sala => sala.id === salaId);
+
+        if (!sala) {
+            ws.send(JSON.stringify({
+                tipo: 'Erro',
+                detalhe: `Não existe uma sala com id ${salaId}`
+            }));
+            return;
+        }
+
+        console.log(`Mensagem válida para atualizar sala ${salaId}`);
     });
 });
 
