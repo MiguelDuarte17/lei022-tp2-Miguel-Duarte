@@ -515,7 +515,14 @@ wss.on('connection', (ws) => {
             return;
         }
 
-        console.log(`Mensagem válida para atualizar sala ${salaId}`);
+        // A mesma sala continua acessível pela API REST
+        sala.estado = estado;
+
+        // Confirmar a atualização ao cliente que enviou o pedido
+        ws.send(JSON.stringify({
+            tipo: 'AtualizacaoConfirmada',
+            sala: sala
+        }));
     });
 });
 
