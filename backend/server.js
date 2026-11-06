@@ -523,6 +523,18 @@ wss.on('connection', (ws) => {
             tipo: 'AtualizacaoConfirmada',
             sala: sala
         }));
+
+        // Notificar automaticamente os restantes clientes ligados
+        wss.clients.forEach(cliente => {
+            if (cliente !== ws && cliente.readyState === WebSocket.OPEN) {
+                cliente.send(JSON.stringify({
+                    tipo: 'EstadoSalaAtualizado',
+                    sala: sala
+                }));
+            }
+        });
+
+        console.log(`Sala ${sala.id} atualizada para ${estado}`);
     });
 });
 
