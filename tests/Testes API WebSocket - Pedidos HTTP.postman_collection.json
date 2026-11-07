@@ -1,0 +1,60 @@
+{
+  "info": {
+    "_postman_id": "cc6a4d99-be2d-4828-9819-4e28a098f1c9",
+    "name": "Testes API WebSocket - Pedidos HTTP",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "58423866"
+  },
+  "item": [
+    {
+      "name": "Criação da Sala A",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"nome\": \"Sala A\",\r\n  \"capacidade\": 30,\r\n  \"estado\": \"disponivel\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/salas",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "salas"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Verificação da atualização feita pelo Cliente A na Sala A (ID 1)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/api/salas/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "salas",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

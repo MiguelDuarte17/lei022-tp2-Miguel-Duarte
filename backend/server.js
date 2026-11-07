@@ -536,6 +536,14 @@ wss.on('connection', (ws) => {
 
         console.log(`Sala ${sala.id} atualizada para ${estado}`);
     });
+
+    ws.on('close', () => {
+        console.log('Cliente WebSocket desligado');
+    });
+
+    ws.on('error', (erro) => {
+        console.error('Erro na ligação WebSocket:', erro.message);
+    });
 });
 
 
